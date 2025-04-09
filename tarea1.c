@@ -134,7 +134,7 @@ int main() {
       modificar_prioridad(tickets);
       break;
     case '3':
-      mostrar_lista_tickets(tickets); //FALTA MOSTRARLOS POR PRIORIDAD
+      mostrar_lista_tickets(tickets); //FALTA MOSTRARLOS POR PRIORIDAD !
       break;
     case '4':
       procesar_sig_ticket(tickets);
