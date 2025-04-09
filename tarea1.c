@@ -4,12 +4,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <time.h>
 
 typedef struct{
   char id[10]; 
   char descripcion[101];
   char prioridad[6];
-  int hora;
+  time_t fecha;
 } registro;
 
 // Menú principal
@@ -39,7 +40,8 @@ void registrar_tickets(List *tickets) {
   scanf(" %100[^\n]", &usuario->descripcion);
   
   strcpy(usuario->prioridad,"Bajo"); //prioridad baja
-  usuario->hora = 0;
+  
+  time(&usuario->fecha);
   list_pushBack(tickets, usuario);
 }
 
@@ -74,7 +76,7 @@ void mostrar_lista_tickets(List *tickets) {
     printf("ID: %s\n", actual->id);
     printf("descripción: %s\n", actual->descripcion);
     printf("Prioridad: %s\n", actual->prioridad);
-    printf("Hora de Registro: %d\n\n", actual->hora);
+    printf("Hora de Registro: %s\n\n", ctime(&actual->fecha));
     actual = list_next(tickets);
   }
 }
@@ -91,7 +93,7 @@ void procesar_sig_ticket(List *tickets){ //ID, descripción, prioridad y hora de
   printf("ID: %s\n", actual->id);
   printf("Descripción: %s\n", actual->descripcion);
   printf("Prioridad: %s\n", actual->prioridad);
-  printf("Hora de Registro: %d\n\n", actual->hora);
+  printf("Hora de Registro: %s\n\n", ctime(&actual->fecha));
 }
 
 //OPCION 5
@@ -109,7 +111,7 @@ void mostrar_ticket_id(List *tickets){
   if(actual != NULL){
     printf("Descripción: %s\n",actual->descripcion);
     printf("Prioridad: %s\n",actual->prioridad);
-    printf("Hora De Registro: %d\n\n",actual->hora);
+    printf("Hora De Registro: %s\n\n", ctime(&actual->fecha));
   }
   else printf("El ID del Usuario no se ha encontrado\n\n");
 }
