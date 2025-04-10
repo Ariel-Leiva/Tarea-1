@@ -39,10 +39,27 @@ void registrar_tickets(List *tickets) {
   printf("Ingrese descripcion del problema:\n");
   scanf(" %100[^\n]", &usuario->descripcion);
   
-  strcpy(usuario->prioridad,"Bajo"); //prioridad baja
+  strcpy(usuario->prioridad,"Bajo"); 
   
   time(&usuario->fecha);
   list_pushBack(tickets, usuario);
+}
+
+//Prioridad (OPCION 2)
+int lower_than_prioridad(void *data1, void *data2) {
+  registro *a = (registro *)data1;
+  registro *b = (registro *)data2;
+
+  int valor_a = 2, valor_b = 2;
+
+  if (strcmp(a->prioridad, "Alta") == 0) valor_a = 0;
+  else if (strcmp(a->prioridad, "Media") == 0) valor_a = 1;
+
+  if (strcmp(b->prioridad, "Alta") == 0) valor_b = 0;
+  else if (strcmp(b->prioridad, "Media") == 0) valor_b = 1;
+
+  if (valor_a != valor_b) return valor_a < valor_b;
+  return a->fecha < b->fecha;
 }
 
 //OPCION 2
@@ -56,12 +73,17 @@ void modificar_prioridad(List *tickets){
 
   registro *actual = list_first(tickets);
   while(actual != NULL){
-    if(strcmp(actual->id, identificador) == 0) break;
+    if(strcmp(actual->id, identificador) == 0)break;
     actual = list_next(tickets);
   }
 
   if(actual != NULL){
-    strcpy(actual->prioridad,nuevaPrioridad);
+    registro *temp = actual;
+    list_popCurrent(tickets);
+    strcpy(temp->prioridad, nuevaPrioridad);
+    time(&temp->fecha);
+    
+    list_sortedInsert(tickets, temp, lower_than_prioridad);
     printf("La prioridad del Usuario se ha actualizado correctamente\n");
   }
   else printf("El ID del Usuario no se ha encontrado\n");  
@@ -136,7 +158,7 @@ int main() {
       modificar_prioridad(tickets);
       break;
     case '3':
-      mostrar_lista_tickets(tickets); //FALTA MOSTRARLOS POR PRIORIDAD !
+      mostrar_lista_tickets(tickets); 
       break;
     case '4':
       procesar_sig_ticket(tickets);
