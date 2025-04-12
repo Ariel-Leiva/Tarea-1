@@ -32,20 +32,19 @@ void mostrarMenuPrincipal() {
 void registrar_tickets(List *tickets) {
   registro* usuario = (registro *) malloc(sizeof(registro));
 
-  printf("Registrar nuevo Ticket\n");
+  printf("\nRegistrar nuevo Ticket\n");
 
-  printf("Ingrese ID del usuario:\n");
+  printf("Ingrese ID del usuario: ");
   scanf(" %9[^\n]", &usuario->id);
-  printf("Ingrese descripcion del problema:\n");
+  printf("Ingrese descripcion del problema: ");
   scanf(" %100[^\n]", &usuario->descripcion);
-  
   strcpy(usuario->prioridad,"Bajo"); 
   
   time(&usuario->fecha);
   list_pushBack(tickets, usuario);
 }
 
-//Prioridad (OPCION 2)
+//Ordena por prioridad y fecha (OPCION 2)
 int lower_than_prioridad(void *data1, void *data2) {
   registro *a = (registro *)data1;
   registro *b = (registro *)data2;
@@ -63,12 +62,12 @@ int lower_than_prioridad(void *data1, void *data2) {
 }
 
 //OPCION 2
-void modificar_prioridad(List *tickets){
+void modificar_prioridad(List *tickets){ //El usuario modifica su prioridad del ticket
   char identificador[10];
   char nuevaPrioridad[6];
-  printf("Ingrese ID del Usuario:\n");
+  printf("\nIngrese ID del Usuario: ");
   scanf(" %9[^\n]", identificador);
-  printf("Ingrese la prioridad Alta, Media o Baja:\n");
+  printf("Ingrese la prioridad Alta, Media o Baja: ");
   scanf(" %5[^\n]", nuevaPrioridad);
 
   registro *actual = list_first(tickets);
@@ -81,7 +80,6 @@ void modificar_prioridad(List *tickets){
     registro *temp = actual;
     list_popCurrent(tickets);
     strcpy(temp->prioridad, nuevaPrioridad);
-    time(&temp->fecha);
     
     list_sortedInsert(tickets, temp, lower_than_prioridad);
     printf("La prioridad del Usuario se ha actualizado correctamente\n");
@@ -90,38 +88,39 @@ void modificar_prioridad(List *tickets){
 }
 
 //OPCION 3
-void mostrar_lista_tickets(List *tickets) {
+void mostrar_lista_tickets(List *tickets) { //Muestra la lista ordenada por Prioridad
   
-  printf("tickets en espera: \n");
+  printf("\nTickets en espera: \n\n");
   registro *actual = list_first(tickets);
   while(actual != NULL){
     printf("ID: %s\n", actual->id);
     printf("descripción: %s\n", actual->descripcion);
     printf("Prioridad: %s\n", actual->prioridad);
-    printf("Hora de Registro: %s\n\n", ctime(&actual->fecha));
+    printf("Fecha de Registro: %s\n\n", ctime(&actual->fecha));
     actual = list_next(tickets);
   }
 }
 
 //OPCION 4
-void procesar_sig_ticket(List *tickets){ //ID, descripción, prioridad y hora de registro
+void procesar_sig_ticket(List *tickets){ //ID, descripción, prioridad y Fecha de registro
   registro *actual = list_first(tickets);
   if(actual == NULL) {
-    printf("No hay tickets pendientes\n\n");
+    printf("\nNo hay tickets pendientes\n\n");
     return;
   }
 
   list_popFront(tickets);
+  printf("\nSiguiente usuario a procesar: \n");
   printf("ID: %s\n", actual->id);
   printf("Descripción: %s\n", actual->descripcion);
   printf("Prioridad: %s\n", actual->prioridad);
-  printf("Hora de Registro: %s\n\n", ctime(&actual->fecha));
+  printf("Fecha de Registro: %s\n\n", ctime(&actual->fecha));
 }
 
 //OPCION 5
-void mostrar_ticket_id(List *tickets){
+void mostrar_ticket_id(List *tickets){ //El usuario escribe su ID y puede ver su ticket
   char identificador[10];
-  printf("Ingrese ID del Usuario:\n");
+  printf("\nIngrese ID del Usuario: ");
   scanf(" %9[^\n]", identificador);
 
   registro *actual = list_first(tickets);
@@ -133,7 +132,7 @@ void mostrar_ticket_id(List *tickets){
   if(actual != NULL){
     printf("Descripción: %s\n",actual->descripcion);
     printf("Prioridad: %s\n",actual->prioridad);
-    printf("Hora De Registro: %s\n\n", ctime(&actual->fecha));
+    printf("Fecha De Registro: %s\n\n", ctime(&actual->fecha));
   }
   else printf("El ID del Usuario no se ha encontrado\n\n");
 }
