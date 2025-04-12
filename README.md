@@ -107,4 +107,4 @@ Está diseñado para optimizar la atención y priorización de problemas técnic
     Descripción: Mi pc no prende
     Prioridad: Media
     Fecha De Registro: Fri Apr 11 23:34:20 2025
-  El usuario podra ver su ticket ingresando su ID y el programa le mostrará su descripción, prioridad, Hora de Registro.
+  El usuario podra ver su ticket ingresando su ID y el programa le mostrará su descripción, prioridad, Fecha de Registro.
