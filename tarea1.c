@@ -36,7 +36,7 @@ void registrar_tickets(List *tickets) {
 
   printf("Ingrese ID del usuario: ");
   scanf(" %9[^\n]", &usuario->id);
-  printf("Ingrese descripcion del problema: ");
+  printf("Ingrese descripción del problema: ");
   scanf(" %100[^\n]", &usuario->descripcion);
   strcpy(usuario->prioridad,"Bajo"); 
   
