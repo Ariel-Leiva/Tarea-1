@@ -29,7 +29,7 @@ void mostrarMenuPrincipal() {
 }
 
 //OPCION 1
-void registrar_tickets(List *tickets) {
+void registrar_tickets(List *tickets) {//El usuario registra el ticket con su respectivo problema
   registro* usuario = (registro *) malloc(sizeof(registro));
 
   printf("\nRegistrar nuevo Ticket\n");
@@ -42,9 +42,10 @@ void registrar_tickets(List *tickets) {
   
   time(&usuario->fecha);
   list_pushBack(tickets, usuario);
+  printf("Se ha registrado correctamente\n\n");
 }
 
-//Ordena por prioridad y fecha (OPCION 2)
+//Funcion ordena por prioridad y fecha (OPCION 2), le da valores a las prioridades y luego las compara
 int lower_than_prioridad(void *data1, void *data2) {
   registro *a = (registro *)data1;
   registro *b = (registro *)data2;
@@ -76,7 +77,7 @@ void modificar_prioridad(List *tickets){ //El usuario modifica su prioridad del 
     actual = list_next(tickets);
   }
 
-  if(actual != NULL){
+  if(actual != NULL){ //Se modifica la prioridad y luego se inserta a la lista en su posicion correspondiente
     registro *temp = actual;
     list_popCurrent(tickets);
     strcpy(temp->prioridad, nuevaPrioridad);
@@ -102,7 +103,7 @@ void mostrar_lista_tickets(List *tickets) { //Muestra la lista ordenada por Prio
 }
 
 //OPCION 4
-void procesar_sig_ticket(List *tickets){ //ID, descripción, prioridad y Fecha de registro
+void procesar_sig_ticket(List *tickets){ //muestra el siguiente ticket a procesar: ID, descripción, prioridad y Fecha de registro
   registro *actual = list_first(tickets);
   if(actual == NULL) {
     printf("\nNo hay tickets pendientes\n\n");
